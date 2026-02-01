@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { theme, lang, analysisState, type AnalysisResults } from '$lib/stores/app';
+  import { theme, lang, analysisState } from '$lib/stores/app';
   import { languages, t, type Language } from '$lib/i18n/translations';
   import { analyzeGenomeComprehensive } from '$lib/analysis/comprehensiveAnalyzer';
+  import { MAX_FILE_SIZE_BYTES } from '$lib/analysis/parser';
   import DropZone from '$lib/components/DropZone.svelte';
   import Results from '$lib/components/Results.svelte';
   import ExportButtons from '$lib/components/ExportButtons.svelte';
@@ -12,7 +13,7 @@
   let progressMessage = '';
   let progressPercent = 0;
   let showDestroyConfirm = false;
-  let privacyMode: 'local' | 'hybrid' = 'local';
+  const languageEntries = Object.entries(languages) as [Language, (typeof languages)[Language]][];
   
   onMount(() => {
     theme.init();
@@ -33,7 +34,18 @@
       analysisState.set({ status: 'loading-db', progress: 0 });
       progressMessage = 'Reading file...';
       
+      if (file.size === 0) {
+        throw new Error('File is empty. Please choose a valid DNA data file.');
+      }
+      
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        throw new Error(`File too large (${Math.round(file.size / 1024 / 1024)}MB). Maximum allowed: ${MAX_FILE_SIZE_BYTES / 1024 / 1024}MB.`);
+      }
+      
       const content = await file.text();
+      if (content.trim().length === 0) {
+        throw new Error('File appears to be empty or unreadable.');
+      }
       
       const results = await analyzeGenomeComprehensive(content, (progress) => {
         progressMessage = progress.message;
@@ -76,6 +88,8 @@
   <meta name="description" content="Privacy-first genetic analysis. Your DNA never leaves your browser.">
 </svelte:head>
 
+<svelte:window on:keydown={(e) => showDestroyConfirm && e.key === 'Escape' && (showDestroyConfirm = false)} />
+
 <div class="min-h-screen flex flex-col bg-white dark:bg-black text-gray-900 dark:text-gray-100">
   <!-- Minimal Header -->
   <header class="border-b border-gray-100 dark:border-gray-900">
@@ -105,7 +119,7 @@
           
           {#if showLangMenu}
             <div class="absolute right-0 mt-1 w-40 max-h-64 overflow-y-auto bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded shadow-lg py-1 z-50">
-              {#each Object.entries(languages) as [code, info]}
+              {#each languageEntries as [code, info]}
                 <button
                   class="w-full px-3 py-1.5 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-900 flex items-center gap-2
                          {code === currentLang ? 'bg-gray-50 dark:bg-gray-900' : ''}"
@@ -216,15 +230,19 @@
         
         <!-- Destroy Modal -->
         {#if showDestroyConfirm}
-          <div 
-            class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="destroy-title"
-            on:click|self={() => showDestroyConfirm = false}
-            on:keydown={(e) => e.key === 'Escape' && (showDestroyConfirm = false)}
-          >
-            <div class="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg p-5 max-w-xs w-full">
+          <div class="fixed inset-0 z-50 p-4 flex items-center justify-center">
+            <button
+              type="button"
+              class="absolute inset-0 bg-black/50"
+              aria-label="Close dialog"
+              on:click={() => showDestroyConfirm = false}
+            ></button>
+            <div 
+              class="relative bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg p-5 max-w-xs w-full"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="destroy-title"
+            >
               <h3 id="destroy-title" class="font-medium mb-2">Destroy data?</h3>
               <p class="text-xs text-gray-500 dark:text-gray-500 mb-4">
                 Clears all results from memory. Cannot be undone.
@@ -239,7 +257,6 @@
                 <button 
                   class="flex-1 px-3 py-1.5 text-xs bg-red-600 text-white hover:bg-red-700 rounded transition-colors"
                   on:click={destroyData}
-                  autofocus
                 >
                   Destroy
                 </button>

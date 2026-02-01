@@ -114,6 +114,13 @@ See [SKILL.md](SKILL.md) for programmatic usage with JSON output.
 - Tailwind CSS
 - jsPDF
 
+## Testing
+
+```bash
+npm run test
+npm run check
+```
+
 ## Data Sources
 
 - [PharmGKB](https://www.pharmgkb.org/)

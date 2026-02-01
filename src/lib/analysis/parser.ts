@@ -10,8 +10,8 @@
  */
 
 // Security constants
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB max (typical 23andMe is ~25MB)
-const MAX_LINE_COUNT = 2_000_000; // 2M lines max (typical is ~600K)
+export const MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024; // 50MB max (typical 23andMe is ~25MB)
+export const MAX_LINE_COUNT = 2_000_000; // 2M lines max (typical is ~600K)
 const MAX_GENOTYPE_LENGTH = 10; // Genotypes should be 1-2 chars, max 10 for safety
 const VALID_RSID_PATTERN = /^rs\d{1,12}$/i;
 const VALID_CHROMOSOME_PATTERN = /^(chr)?(1?[0-9]|2[0-2]|[XYMxy]|MT)$/i;
@@ -67,11 +67,13 @@ function parse23andMe(content: string): ParsedGenome {
     const parts = line.split('\t');
     if (parts.length >= 4) {
       const [rsid, chromosome, position, genotype] = parts;
-      if (genotype && genotype !== '--' && genotype !== '00') {
-        snps.set(rsid.toLowerCase(), {
+      const cleanedRsid = rsid?.trim();
+      const cleanedGenotype = sanitizeGenotype(genotype);
+      if (cleanedRsid && cleanedGenotype && isValidRsid(cleanedRsid) && VALID_CHROMOSOME_PATTERN.test(chromosome)) {
+        snps.set(cleanedRsid.toLowerCase(), {
           chromosome,
           position,
-          genotype: genotype.toUpperCase()
+          genotype: cleanedGenotype
         });
       }
     }
@@ -91,11 +93,14 @@ function parseAncestry(content: string): ParsedGenome {
     const parts = line.split('\t');
     if (parts.length >= 5) {
       const [rsid, chromosome, position, allele1, allele2] = parts;
-      if (allele1 && allele2 && allele1 !== '0' && allele2 !== '0') {
-        snps.set(rsid.toLowerCase(), {
+      const cleanedRsid = rsid?.trim();
+      const genotype = allele1 && allele2 ? `${allele1}${allele2}` : '';
+      const cleanedGenotype = sanitizeGenotype(genotype);
+      if (cleanedRsid && cleanedGenotype && isValidRsid(cleanedRsid) && VALID_CHROMOSOME_PATTERN.test(chromosome)) {
+        snps.set(cleanedRsid.toLowerCase(), {
           chromosome,
           position,
-          genotype: (allele1 + allele2).toUpperCase()
+          genotype: cleanedGenotype
         });
       }
     }
@@ -121,11 +126,13 @@ function parseMyHeritage(content: string): ParsedGenome {
     const parts = line.split(',').map(p => p.replace(/"/g, '').trim());
     if (parts.length >= 4) {
       const [rsid, chromosome, position, result] = parts;
-      if (result && result !== '--') {
-        snps.set(rsid.toLowerCase(), {
+      const cleanedRsid = rsid?.trim();
+      const cleanedGenotype = sanitizeGenotype(result);
+      if (cleanedRsid && cleanedGenotype && isValidRsid(cleanedRsid) && VALID_CHROMOSOME_PATTERN.test(chromosome)) {
+        snps.set(cleanedRsid.toLowerCase(), {
           chromosome,
           position,
-          genotype: result.toUpperCase()
+          genotype: cleanedGenotype
         });
       }
     }
@@ -156,11 +163,18 @@ function parseVCF(content: string): ParsedGenome {
         const indices = gt.replace(/[|/]/g, ',').split(',').map(Number);
         const genotype = indices.map(i => alleles[i] || '.').join('');
         
-        if (genotype && !genotype.includes('.')) {
+        const cleanedGenotype = sanitizeGenotype(genotype);
+        const cleanedChrom = chrom.replace('chr', '');
+        if (
+          cleanedGenotype &&
+          !genotype.includes('.') &&
+          isValidRsid(id) &&
+          VALID_CHROMOSOME_PATTERN.test(cleanedChrom)
+        ) {
           snps.set(id.toLowerCase(), {
-            chromosome: chrom.replace('chr', ''),
+            chromosome: cleanedChrom,
             position: pos,
-            genotype: genotype.toUpperCase()
+            genotype: cleanedGenotype
           });
         }
       }
@@ -194,8 +208,8 @@ function isValidRsid(rsid: string): boolean {
 export function parseGenome(content: string): ParsedGenome {
   // Security: Check file size
   const fileSize = new Blob([content]).size;
-  if (fileSize > MAX_FILE_SIZE) {
-    throw new Error(`File too large (${Math.round(fileSize / 1024 / 1024)}MB). Maximum allowed: ${MAX_FILE_SIZE / 1024 / 1024}MB`);
+  if (fileSize > MAX_FILE_SIZE_BYTES) {
+    throw new Error(`File too large (${Math.round(fileSize / 1024 / 1024)}MB). Maximum allowed: ${MAX_FILE_SIZE_BYTES / 1024 / 1024}MB`);
   }
   
   // Security: Check line count
