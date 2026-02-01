@@ -10,6 +10,7 @@
 
 import { parseGenome, type ParsedGenome } from './parser';
 import { COMPREHENSIVE_SNPS } from './comprehensiveSnpDatabase';
+import { explainClinVarVariant, explainDrugInteraction, inferCategory, getSeverityScore } from './autoExplainer';
 import type { AnalysisResults, SNPResult, DrugInteraction, DiseaseRisk } from '$lib/stores/app';
 
 // Lazy-loaded databases
@@ -188,13 +189,30 @@ async function analyzeClinVar(genome: ParsedGenome, onProgress?: ProgressCallbac
         significance = 'Protective';
       }
       
+      // Generate human-readable explanation
+      const humanExplanation = explainClinVarVariant(
+        entry.gene || 'Unknown',
+        entry.condition || 'Not specified',
+        entry.sig,
+        entry.stars
+      );
+      
+      // Infer category for better organization
+      const category = inferCategory(entry.gene || '', entry.condition || '');
+      
+      // Calculate severity for sorting
+      const severity = getSeverityScore(significance, entry.stars);
+      
       risks.push({
         rsid: userData.rsid.toUpperCase(),
         gene: entry.gene || 'Unknown',
         condition: entry.condition || 'Not specified',
         significance,
-        interpretation: `${entry.sig} (${entry.stars} star${entry.stars !== 1 ? 's' : ''} review)`
-      });
+        interpretation: humanExplanation,
+        category,
+        severity,
+        stars: entry.stars
+      } as DiseaseRisk);
     }
   }
   
@@ -221,13 +239,22 @@ async function analyzePharmGKB(genome: ParsedGenome, onProgress?: ProgressCallba
       for (const entry of entries) {
         // Prioritize by evidence level
         const level = entry.level || '3';
+        const drugList = entry.drugs.split(';').map(d => d.trim()).filter(d => d);
+        
+        // Generate human-readable explanation
+        const humanExplanation = explainDrugInteraction(
+          entry.gene,
+          drugList,
+          level,
+          entry.phenotype
+        );
         
         interactions.push({
           rsid: rsid.toUpperCase(),
           gene: entry.gene,
-          drugs: entry.drugs.split(';').map(d => d.trim()).filter(d => d),
+          drugs: drugList,
           level,
-          recommendation: entry.annotation || entry.phenotype || 'See PharmGKB for details'
+          recommendation: humanExplanation
         });
       }
     }

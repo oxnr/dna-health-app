@@ -215,14 +215,34 @@ npm run build     # Production build
 - [CPIC](https://cpicpgx.org/) — Clinical pharmacogenetics guidelines
 - [SNPedia](https://www.snpedia.com/) — SNP wiki
 
+## How It Works
+
+whatsmydna uses a **three-layer analysis system** that works for ANY DNA file:
+
+### Layer 1: ClinVar Database (85,588 variants)
+- Scans for pathogenic, likely pathogenic, and risk variants
+- **Auto-explains** findings in plain English using a gene function database
+- Covers cancer genes, cardiovascular, neurological, metabolic disorders
+- No manual curation needed - works automatically
+
+### Layer 2: PharmGKB (2,840 drug-gene interactions)
+- Identifies medications that may need dosing adjustments
+- **Auto-explains** drug interactions with evidence levels
+- Covers warfarin, statins, antidepressants, chemotherapy, and more
+- Follows CPIC clinical guidelines
+
+### Layer 3: Curated SNPs (114 markers)
+- Hand-written explanations for common health/lifestyle markers
+- Premium quality explanations with actionable advice
+- Covers: caffeine, lactose, COMT, ACTN3, FTO, APOE, MTHFR, etc.
+- Community-contributed via pull requests
+
+**Result:** Any DNA file gets useful results. Rare variants get auto-generated explanations. Common variants get premium curated explanations.
+
 ## Development
 
-The curated SNP database was built using AI-assisted analysis:
-- **Claude Code** identified lifestyle/trait markers (COMT, ACTN3, TAS2R38, lactose, caffeine)
-- **Codex** added cardiovascular (LPA), detox (PON1), inflammation (IL6R), and liver (PNPLA3) markers
-- Both analyses were compared and merged for comprehensive coverage
-
-To contribute new markers, add entries to `src/lib/analysis/comprehensiveSnpDatabase.ts`.
+To contribute curated markers, add entries to `src/lib/analysis/comprehensiveSnpDatabase.ts`.
+To improve auto-explanations, edit `src/lib/analysis/autoExplainer.ts`.
 
 ## Disclaimer
 

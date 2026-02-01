@@ -72,6 +72,9 @@ export interface DiseaseRisk {
   condition: string;
   significance: string;
   interpretation: string;
+  category?: string;
+  severity?: number;
+  stars?: number;
 }
 
 export interface AnalysisResults {
