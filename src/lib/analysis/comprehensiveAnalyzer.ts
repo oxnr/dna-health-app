@@ -290,3 +290,12 @@ export async function analyzeGenomeComprehensive(
     timestamp: new Date()
   };
 }
+
+/**
+ * Clear all cached data from memory
+ * Call this when user clicks "Destroy Data" for thorough cleanup
+ */
+export function clearAnalysisCache(): void {
+  clinvarData = null;
+  pharmgkbData = null;
+}

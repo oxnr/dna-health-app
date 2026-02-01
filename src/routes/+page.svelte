@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { theme, lang, analysisState } from '$lib/stores/app';
   import { languages, t, type Language } from '$lib/i18n/translations';
-  import { analyzeGenomeComprehensive } from '$lib/analysis/comprehensiveAnalyzer';
+  import { analyzeGenomeComprehensive, clearAnalysisCache } from '$lib/analysis/comprehensiveAnalyzer';
   import { MAX_FILE_SIZE_BYTES, parseGenomeFromBytes } from '$lib/analysis/parser';
   import DropZone from '$lib/components/DropZone.svelte';
   import Results from '$lib/components/Results.svelte';
@@ -111,10 +111,17 @@
   }
   
   function destroyData() {
+    // Clear UI state
     analysisState.set({ status: 'idle' });
+    
+    // Clear cached database data
+    clearAnalysisCache();
+    
+    // Force garbage collection if available (Chrome with --expose-gc)
     if (typeof window !== 'undefined' && (window as any).gc) {
       (window as any).gc();
     }
+    
     showDestroyConfirm = false;
   }
   

@@ -22,7 +22,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "img-src 'self' data: blob:; " +
-    "connect-src 'self' https://myvariant.info https://rest.ensembl.org https://www.ebi.ac.uk; " +
+    "connect-src 'self'; " +
     "frame-ancestors 'none';"
   );
 
