@@ -87,7 +87,7 @@ pie title Data Sources (Compressed Download)
 |----------|---------|----------|
 | **ClinVar** | 85,588 | Pathogenic, likely pathogenic, risk factors |
 | **PharmGKB** | 2,840 | Drug-gene interactions with evidence levels |
-| **Comprehensive SNPs** | 200+ | Drug metabolism, methylation, fitness, nutrition, sleep, cardiovascular, cognition, longevity |
+| **Curated SNPs** | 91 | Drug metabolism, cardiovascular (LPA, PON1), inflammation (IL6R), liver (PNPLA3), nutrition, fitness, cognition, detox |
 
 ## Privacy Architecture
 
@@ -166,12 +166,15 @@ curl -X POST http://localhost:5173/api/analyze \
 
 | Category | Key Genes | Clinical Relevance |
 |----------|-----------|-------------------|
-| **Drug Metabolism** | CYP2C19, CYP2D6, CYP3A5, VKORC1 | Dosing adjustments |
+| **Drug Metabolism** | CYP2C19, CYP2D6, CYP2C9, CYP2A6, VKORC1 | Dosing adjustments |
 | **Methylation** | MTHFR, MTR, MTRR, BHMT | Folate metabolism |
-| **Cardiovascular** | APOE, F5 (Leiden), F2 | Heart disease risk |
+| **Cardiovascular** | APOE, F5 (Leiden), F2, LPA | Heart disease, Lp(a) risk |
 | **Pharmacogenomics** | SLCO1B1, DPYD, TPMT | Drug toxicity risk |
+| **Detox** | PON1, CYP1A2 | Organophosphate/pesticide metabolism |
+| **Inflammation** | IL6R, TNF | Inflammatory markers |
+| **Liver** | PNPLA3 | NAFLD/fatty liver risk |
 | **Neurotransmitters** | COMT, BDNF, DRD2, MAOA | Mental health |
-| **Nutrition** | MCM6 (lactose), FTO, TCF7L2 | Diet optimization |
+| **Nutrition** | MCM6 (lactose), FTO, TCF7L2, TAS2R38 | Diet, bitter taste |
 | **Fitness** | ACTN3, PPARGC1A, ADRB2 | Athletic potential |
 | **Sleep** | CLOCK, PER2, ADA | Circadian rhythm |
 | **Longevity** | FOXO3, CETP, APOC3 | Aging markers |
@@ -211,6 +214,15 @@ npm run build     # Production build
 - [PharmGKB](https://www.pharmgkb.org/) — Pharmacogenomics knowledge base
 - [CPIC](https://cpicpgx.org/) — Clinical pharmacogenetics guidelines
 - [SNPedia](https://www.snpedia.com/) — SNP wiki
+
+## Development
+
+The curated SNP database was built using AI-assisted analysis:
+- **Claude Code** identified lifestyle/trait markers (COMT, ACTN3, TAS2R38, lactose, caffeine)
+- **Codex** added cardiovascular (LPA), detox (PON1), inflammation (IL6R), and liver (PNPLA3) markers
+- Both analyses were compared and merged for comprehensive coverage
+
+To contribute new markers, add entries to `src/lib/analysis/comprehensiveSnpDatabase.ts`.
 
 ## Disclaimer
 

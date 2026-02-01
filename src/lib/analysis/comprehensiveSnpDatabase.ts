@@ -2188,6 +2188,214 @@ export const COMPREHENSIVE_SNPS: Record<string, SNPEntry> =
         "magnitude": 3
       }
     }
+  },
+  "rs10455872": {
+    "gene": "LPA",
+    "category": "Cardiovascular",
+    "variants": {
+      "AA": {
+        "status": "normal",
+        "desc": "Normal Lp(a) levels expected",
+        "magnitude": 0
+      },
+      "AG": {
+        "status": "elevated",
+        "desc": "Elevated Lp(a) - increased cardiovascular risk, consider Lp(a) blood test",
+        "magnitude": 3
+      },
+      "GA": {
+        "status": "elevated",
+        "desc": "Elevated Lp(a) - increased cardiovascular risk, consider Lp(a) blood test",
+        "magnitude": 3
+      },
+      "GG": {
+        "status": "high",
+        "desc": "High Lp(a) risk - strongly elevated cardiovascular risk, get Lp(a) tested",
+        "magnitude": 4
+      }
+    }
+  },
+  "rs3798220": {
+    "gene": "LPA",
+    "category": "Cardiovascular",
+    "variants": {
+      "TT": {
+        "status": "normal",
+        "desc": "Normal Lp(a) levels expected from this variant",
+        "magnitude": 0
+      },
+      "TC": {
+        "status": "elevated",
+        "desc": "Elevated Lp(a) - increased cardiovascular and aortic stenosis risk",
+        "magnitude": 3
+      },
+      "CT": {
+        "status": "elevated",
+        "desc": "Elevated Lp(a) - increased cardiovascular and aortic stenosis risk",
+        "magnitude": 3
+      },
+      "CC": {
+        "status": "high",
+        "desc": "High Lp(a) risk - consider aspirin, statins with cardiologist guidance",
+        "magnitude": 4
+      }
+    }
+  },
+  "rs2228145": {
+    "gene": "IL6R",
+    "category": "Inflammation",
+    "variants": {
+      "AA": {
+        "status": "normal",
+        "desc": "Normal IL-6 receptor function",
+        "magnitude": 0
+      },
+      "AC": {
+        "status": "reduced",
+        "desc": "Asp358Ala - reduced IL-6 signaling, may be protective against inflammation",
+        "magnitude": 1
+      },
+      "CA": {
+        "status": "reduced",
+        "desc": "Asp358Ala - reduced IL-6 signaling, may be protective against inflammation",
+        "magnitude": 1
+      },
+      "CC": {
+        "status": "protective",
+        "desc": "Homozygous Ala358 - lower inflammation risk, reduced coronary artery disease risk",
+        "magnitude": 1
+      }
+    }
+  },
+  "rs662": {
+    "gene": "PON1",
+    "category": "Detox",
+    "variants": {
+      "TT": {
+        "status": "low-activity",
+        "desc": "PON1 Q192 - lower paraoxonase activity, reduced organophosphate detox",
+        "magnitude": 2
+      },
+      "TC": {
+        "status": "intermediate",
+        "desc": "PON1 Q192R heterozygous - intermediate detox capacity",
+        "magnitude": 1
+      },
+      "CT": {
+        "status": "intermediate",
+        "desc": "PON1 Q192R heterozygous - intermediate detox capacity",
+        "magnitude": 1
+      },
+      "CC": {
+        "status": "high-activity",
+        "desc": "PON1 R192 - higher paraoxonase activity, better organophosphate detox",
+        "magnitude": 0
+      }
+    }
+  },
+  "rs854560": {
+    "gene": "PON1",
+    "category": "Detox",
+    "variants": {
+      "TT": {
+        "status": "low",
+        "desc": "PON1 M55 - lower enzyme levels, reduced antioxidant capacity",
+        "magnitude": 2
+      },
+      "TA": {
+        "status": "intermediate",
+        "desc": "PON1 L55M heterozygous - intermediate enzyme levels",
+        "magnitude": 1
+      },
+      "AT": {
+        "status": "intermediate",
+        "desc": "PON1 L55M heterozygous - intermediate enzyme levels",
+        "magnitude": 1
+      },
+      "AA": {
+        "status": "high",
+        "desc": "PON1 L55 - higher enzyme levels, better lipid oxidation protection",
+        "magnitude": 0
+      }
+    }
+  },
+  "rs2256871": {
+    "gene": "CYP2A6",
+    "category": "Drug Metabolism",
+    "variants": {
+      "AA": {
+        "status": "normal",
+        "desc": "Normal CYP2A6 - standard nicotine metabolism",
+        "magnitude": 0
+      },
+      "AG": {
+        "status": "reduced",
+        "desc": "Reduced CYP2A6 activity - slower nicotine metabolism, may smoke less",
+        "magnitude": 1
+      },
+      "GA": {
+        "status": "reduced",
+        "desc": "Reduced CYP2A6 activity - slower nicotine metabolism, may smoke less",
+        "magnitude": 1
+      },
+      "GG": {
+        "status": "poor",
+        "desc": "Poor CYP2A6 metabolizer - very slow nicotine clearance, lower cigarette consumption",
+        "magnitude": 2
+      }
+    }
+  },
+  "rs738409": {
+    "gene": "PNPLA3",
+    "category": "Liver",
+    "variants": {
+      "CC": {
+        "status": "normal",
+        "desc": "Normal PNPLA3 - standard liver fat metabolism",
+        "magnitude": 0
+      },
+      "CG": {
+        "status": "risk",
+        "desc": "PNPLA3 I148M carrier - increased NAFLD and liver disease risk",
+        "magnitude": 2
+      },
+      "GC": {
+        "status": "risk",
+        "desc": "PNPLA3 I148M carrier - increased NAFLD and liver disease risk",
+        "magnitude": 2
+      },
+      "GG": {
+        "status": "high-risk",
+        "desc": "PNPLA3 I148M homozygous - significantly elevated NAFLD, NASH, cirrhosis risk",
+        "magnitude": 4
+      }
+    }
+  },
+  "rs1426654": {
+    "gene": "SLC24A5",
+    "category": "Traits",
+    "variants": {
+      "AA": {
+        "status": "light",
+        "desc": "European skin pigmentation variant - lighter skin",
+        "magnitude": 0
+      },
+      "AG": {
+        "status": "intermediate",
+        "desc": "Heterozygous skin pigmentation",
+        "magnitude": 0
+      },
+      "GA": {
+        "status": "intermediate",
+        "desc": "Heterozygous skin pigmentation",
+        "magnitude": 0
+      },
+      "GG": {
+        "status": "dark",
+        "desc": "Ancestral variant - darker skin pigmentation",
+        "magnitude": 0
+      }
+    }
   }
 }
 ;
