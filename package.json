@@ -1,5 +1,5 @@
 {
-  "name": "dna-health-app",
+  "name": "whatsmydna",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -22,9 +22,7 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
-    "file-saver": "^2.0.5",
-    "jspdf": "^2.5.1",
-    "idb-keyval": "^6.2.1"
+    "jspdf": "^4.0.0"
   },
   "type": "module"
 }

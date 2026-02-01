@@ -12,8 +12,8 @@ function createThemeStore() {
     init: () => {
       if (typeof window !== 'undefined') {
         const stored = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = stored || (prefersDark ? 'dark' : 'light');
+        // Default to light mode, only use dark if explicitly set by user
+        const theme = stored || 'light';
         set(theme as 'light' | 'dark');
         document.documentElement.classList.toggle('dark', theme === 'dark');
       }
