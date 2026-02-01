@@ -25,7 +25,9 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "jspdf": "^4.0.0"
+    "jspdf": "^4.0.0",
+    "jszip": "^3.10.1",
+    "pako": "^2.1.0"
   },
   "type": "module"
 }

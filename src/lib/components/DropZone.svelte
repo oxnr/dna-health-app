@@ -53,7 +53,7 @@
   <input
     bind:this={fileInput}
     type="file"
-    accept=".txt,.csv,.tsv,.vcf"
+    accept=".txt,.csv,.tsv,.vcf,.zip,.gz"
     class="hidden"
     on:change={handleFileSelect}
   />

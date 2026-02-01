@@ -3,7 +3,7 @@
   import { theme, lang, analysisState } from '$lib/stores/app';
   import { languages, t, type Language } from '$lib/i18n/translations';
   import { analyzeGenomeComprehensive } from '$lib/analysis/comprehensiveAnalyzer';
-  import { MAX_FILE_SIZE_BYTES } from '$lib/analysis/parser';
+  import { MAX_FILE_SIZE_BYTES, parseGenomeFromBytes } from '$lib/analysis/parser';
   import DropZone from '$lib/components/DropZone.svelte';
   import Results from '$lib/components/Results.svelte';
   import ExportButtons from '$lib/components/ExportButtons.svelte';
@@ -42,7 +42,49 @@
         throw new Error(`File too large (${Math.round(file.size / 1024 / 1024)}MB). Maximum allowed: ${MAX_FILE_SIZE_BYTES / 1024 / 1024}MB.`);
       }
       
-      const content = await file.text();
+      // Read as bytes to handle both text and compressed files
+      const arrayBuffer = await file.arrayBuffer();
+      const bytes = new Uint8Array(arrayBuffer);
+      
+      // Parse genome (handles .zip, .gz, and plain text automatically)
+      progressMessage = 'Parsing file...';
+      const genome = await parseGenomeFromBytes(bytes);
+      
+      if (genome.snpCount === 0) {
+        throw new Error('No valid SNPs found in file.');
+      }
+      
+      // Convert back to content string for analyzer (genome already parsed)
+      // Re-read as text for the analyzer which does its own parsing
+      // This is a bit redundant but keeps the analyzer interface clean
+      let content: string;
+      const isCompressed = bytes[0] === 0x1f && bytes[1] === 0x8b || // gzip
+                          bytes[0] === 0x50 && bytes[1] === 0x4b;   // zip
+      
+      if (isCompressed) {
+        // For compressed files, we need to pass decompressed content
+        // Re-use the parsed genome to reconstruct content would be complex
+        // Instead, decompress again (cheap operation)
+        const { default: pako } = await import('pako');
+        const { default: JSZip } = await import('jszip');
+        
+        if (bytes[0] === 0x50 && bytes[1] === 0x4b) {
+          // ZIP file
+          const zip = await JSZip.loadAsync(bytes);
+          const files = Object.keys(zip.files).filter(name => 
+            !name.startsWith('__MACOSX') && !name.startsWith('.') && !zip.files[name].dir
+          );
+          const txtFile = files.find(f => f.toLowerCase().endsWith('.txt')) || files[0];
+          content = await zip.files[txtFile].async('string');
+        } else {
+          // GZIP file
+          const decompressed = pako.inflate(bytes);
+          content = new TextDecoder('utf-8').decode(decompressed);
+        }
+      } else {
+        content = new TextDecoder('utf-8').decode(bytes);
+      }
+      
       if (content.trim().length === 0) {
         throw new Error('File appears to be empty or unreadable.');
       }

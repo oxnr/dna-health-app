@@ -131,6 +131,9 @@ sequenceDiagram
 | Nebula Genomics | TSV | ✅ |
 | FamilyTreeDNA | CSV | ✅ |
 | VCF files | VCF | ✅ |
+| **Compressed** | .zip, .gz | ✅ |
+
+> 💡 **Tip:** You can drop compressed 23andMe downloads directly — no need to unzip first!
 
 ## Quick Start
 

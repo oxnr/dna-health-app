@@ -1,6 +1,7 @@
 /**
  * DNA File Parser
  * Supports: 23andMe, AncestryDNA, MyHeritage, Nebula, FamilyTreeDNA
+ * Supports compressed files: .zip, .gz
  * 
  * Security considerations:
  * - File size limits enforced
@@ -8,6 +9,9 @@
  * - Input sanitization on all parsed values
  * - No eval or dynamic code execution
  */
+
+import pako from 'pako';
+import JSZip from 'jszip';
 
 // Security constants
 export const MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024; // 50MB max (typical 23andMe is ~25MB)
@@ -200,6 +204,78 @@ function sanitizeGenotype(genotype: string): string | null {
  */
 function isValidRsid(rsid: string): boolean {
   return VALID_RSID_PATTERN.test(rsid);
+}
+
+/**
+ * Decompress gzip data
+ */
+function decompressGzip(data: Uint8Array): string {
+  try {
+    const decompressed = pako.inflate(data);
+    return new TextDecoder('utf-8').decode(decompressed);
+  } catch {
+    throw new Error('Failed to decompress gzip file');
+  }
+}
+
+/**
+ * Extract text content from a zip file
+ * Returns the content of the first text file found
+ */
+async function extractFromZip(data: Uint8Array): Promise<string> {
+  try {
+    const zip = await JSZip.loadAsync(data);
+    const files = Object.keys(zip.files).filter(name => 
+      !name.startsWith('__MACOSX') && 
+      !name.startsWith('.') &&
+      !zip.files[name].dir
+    );
+    
+    if (files.length === 0) {
+      throw new Error('No files found in zip archive');
+    }
+    
+    // Find the main data file (prefer .txt files, then any file)
+    const txtFile = files.find(f => f.toLowerCase().endsWith('.txt')) || files[0];
+    const content = await zip.files[txtFile].async('string');
+    return content;
+  } catch (err) {
+    if (err instanceof Error && err.message.includes('No files found')) {
+      throw err;
+    }
+    throw new Error('Failed to extract zip file');
+  }
+}
+
+/**
+ * Detect if data is gzip compressed (magic bytes: 1f 8b)
+ */
+function isGzip(data: Uint8Array): boolean {
+  return data.length >= 2 && data[0] === 0x1f && data[1] === 0x8b;
+}
+
+/**
+ * Detect if data is a zip file (magic bytes: 50 4b 03 04)
+ */
+function isZip(data: Uint8Array): boolean {
+  return data.length >= 4 && data[0] === 0x50 && data[1] === 0x4b && data[2] === 0x03 && data[3] === 0x04;
+}
+
+/**
+ * Parse genome from raw file bytes (handles compression automatically)
+ */
+export async function parseGenomeFromBytes(data: Uint8Array): Promise<ParsedGenome> {
+  let content: string;
+  
+  if (isZip(data)) {
+    content = await extractFromZip(data);
+  } else if (isGzip(data)) {
+    content = decompressGzip(data);
+  } else {
+    content = new TextDecoder('utf-8').decode(data);
+  }
+  
+  return parseGenome(content);
 }
 
 /**
