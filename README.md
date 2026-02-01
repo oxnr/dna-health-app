@@ -5,7 +5,7 @@ Privacy-first genetic health analysis. Your DNA never leaves your browser.
 **Live:** [whatsmydna.xyz](https://whatsmydna.xyz)
 
 <p align="center">
-  <img src="screenshots/app-light.svg" alt="whatsmydna" width="600">
+  <img src="screenshots/app-light.png" alt="whatsmydna" width="700">
 </p>
 
 ## How It Works
