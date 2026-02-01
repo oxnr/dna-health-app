@@ -2084,6 +2084,110 @@ export const COMPREHENSIVE_SNPS: Record<string, SNPEntry> =
         "magnitude": 1
       }
     }
+  },
+  "rs713598": {
+    "gene": "TAS2R38",
+    "category": "Nutrition",
+    "variants": {
+      "CC": {
+        "status": "taster",
+        "desc": "Bitter taster (PAV) - can taste PROP/PTC, may dislike bitter vegetables",
+        "magnitude": 1
+      },
+      "CG": {
+        "status": "intermediate",
+        "desc": "Intermediate bitter taste sensitivity",
+        "magnitude": 0
+      },
+      "GC": {
+        "status": "intermediate",
+        "desc": "Intermediate bitter taste sensitivity",
+        "magnitude": 0
+      },
+      "GG": {
+        "status": "non-taster",
+        "desc": "Non-taster (AVI) - cannot taste PROP/PTC bitter compounds",
+        "magnitude": 1
+      }
+    }
+  },
+  "rs1726866": {
+    "gene": "TAS2R38",
+    "category": "Nutrition",
+    "variants": {
+      "AA": {
+        "status": "taster",
+        "desc": "Bitter taster allele - contributes to PAV haplotype",
+        "magnitude": 1
+      },
+      "AG": {
+        "status": "intermediate",
+        "desc": "Heterozygous bitter taste",
+        "magnitude": 0
+      },
+      "GA": {
+        "status": "intermediate",
+        "desc": "Heterozygous bitter taste",
+        "magnitude": 0
+      },
+      "GG": {
+        "status": "non-taster",
+        "desc": "Non-taster allele - contributes to AVI haplotype",
+        "magnitude": 1
+      }
+    }
+  },
+  "rs10246939": {
+    "gene": "TAS2R38",
+    "category": "Nutrition",
+    "variants": {
+      "TT": {
+        "status": "taster",
+        "desc": "Bitter taster allele - contributes to PAV haplotype",
+        "magnitude": 1
+      },
+      "TC": {
+        "status": "intermediate",
+        "desc": "Heterozygous bitter taste",
+        "magnitude": 0
+      },
+      "CT": {
+        "status": "intermediate",
+        "desc": "Heterozygous bitter taste",
+        "magnitude": 0
+      },
+      "CC": {
+        "status": "non-taster",
+        "desc": "Non-taster allele - contributes to AVI haplotype",
+        "magnitude": 1
+      }
+    }
+  },
+  "rs17782313": {
+    "gene": "MC4R",
+    "category": "Nutrition",
+    "variants": {
+      "TT": {
+        "status": "normal",
+        "desc": "Normal MC4R - standard appetite regulation",
+        "magnitude": 0
+      },
+      "TC": {
+        "status": "risk",
+        "desc": "MC4R risk allele - associated with increased appetite and BMI",
+        "magnitude": 2
+      },
+      "CT": {
+        "status": "risk",
+        "desc": "MC4R risk allele - associated with increased appetite and BMI",
+        "magnitude": 2
+      },
+      "CC": {
+        "status": "high-risk",
+        "desc": "MC4R homozygous risk - strongly associated with obesity and appetite dysregulation",
+        "magnitude": 3
+      }
+    }
   }
 }
 ;
