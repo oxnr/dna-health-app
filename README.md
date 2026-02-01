@@ -4,7 +4,7 @@
 
 Upload your 23andMe, AncestryDNA, or other genetic testing file and get instant, human-readable health insights. All processing happens in your browser — your DNA never leaves your device.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://whatsmydna.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://oxnr.github.io/whatsmydna)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 ## ✨ Features
@@ -18,7 +18,7 @@ Upload your 23andMe, AncestryDNA, or other genetic testing file and get instant,
 
 ## 🚀 Quick Start
 
-1. Visit [whatsmydna.vercel.app](https://whatsmydna.vercel.app)
+1. Visit [oxnr.github.io/whatsmydna](https://oxnr.github.io/whatsmydna)
 2. Drag & drop your DNA file (23andMe, AncestryDNA, etc.)
 3. Get instant results!
 
@@ -198,7 +198,7 @@ MIT License — use freely, but please contribute improvements back!
 
 - Built with [SvelteKit](https://kit.svelte.dev/)
 - UI components from [shadcn-svelte](https://www.shadcn-svelte.com/)
-- Hosted on [Vercel](https://vercel.com)
+- Hosted on [GitHub Pages](https://pages.github.com)
 - Curated with help from AI (Claude Code + Codex)
 
 ---
