@@ -199,7 +199,14 @@ MIT License — use freely, but please contribute improvements back!
 - Built with [SvelteKit](https://kit.svelte.dev/)
 - UI components from [shadcn-svelte](https://www.shadcn-svelte.com/)
 - Hosted on [GitHub Pages](https://pages.github.com)
-- Curated with help from AI (Claude Code + Codex)
+
+### AI-Powered Development
+This project was built and curated with the help of AI coding agents:
+- **[OpenClaw](https://github.com/openclaw/openclaw)** — AI agent orchestration platform
+- **[Claude Code](https://www.anthropic.com/claude-code)** — Anthropic's coding agent (identified lifestyle/trait markers)
+- **[Codex](https://openai.com/codex)** — OpenAI's coding agent (discovered cardiovascular & detox markers)
+
+The SNP database, auto-explainer, and recommendations engine were developed through AI-human collaboration.
 
 ---
 
