@@ -47,6 +47,14 @@ function createLangStore() {
 export const lang = createLangStore();
 
 // Analysis state
+export interface Recommendation {
+  category: 'food' | 'supplement' | 'lifestyle' | 'medical' | 'avoid';
+  title: string;
+  description: string;
+  priority: 'high' | 'medium' | 'low';
+  evidence: string;
+}
+
 export interface SNPResult {
   rsid: string;
   gene: string;
@@ -56,6 +64,7 @@ export interface SNPResult {
   description: string;
   magnitude: number;
   impact: 'high' | 'moderate' | 'low' | 'info';
+  recommendations?: Recommendation[];
 }
 
 export interface DrugInteraction {

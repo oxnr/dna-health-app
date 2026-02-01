@@ -1,262 +1,206 @@
-# whatsmydna
+# 🧬 What's My DNA
 
-Privacy-first genetic health analysis. Your DNA never leaves your browser.
+**Privacy-first DNA analysis that works for everyone.**
 
-**Live:** [whatsmydna.xyz](https://whatsmydna.xyz)
+Upload your 23andMe, AncestryDNA, or other genetic testing file and get instant, human-readable health insights. All processing happens in your browser — your DNA never leaves your device.
 
-<p align="center">
-  <img src="screenshots/app-light.png" alt="whatsmydna" width="700">
-</p>
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://whatsmydna.vercel.app)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-## How It Works
+## ✨ Features
 
-```mermaid
-flowchart LR
-    subgraph Browser["🔒 Your Browser (100% Local)"]
-        A[DNA File] --> B[Parser]
-        B --> C{Analyzer}
-        
-        C --> D[ClinVar\n85K variants]
-        C --> E[PharmGKB\n2,840 drugs]
-        C --> F[SNP Database\n200+ markers]
-        
-        D --> G[Results]
-        E --> G
-        F --> G
-        
-        G --> H[Export\nPDF/MD/TXT]
-    end
-    
-    I[Internet] -.->|"❌ No data sent"| Browser
-```
+- **🔒 100% Private** — Analysis runs entirely in your browser. No uploads, no servers, no tracking.
+- **🌍 Works for Everyone** — 85,000+ variants analyzed automatically with human-readable explanations.
+- **💊 Actionable Recommendations** — Get personalized advice for food, supplements, and lifestyle.
+- **📱 Mobile Friendly** — Works on any device with a modern browser.
+- **🌙 Dark Mode** — Easy on the eyes.
+- **🌐 Multi-language** — English, German, Turkish, and more.
 
-### Analysis Pipeline
+## 🚀 Quick Start
 
-```mermaid
-flowchart TB
-    subgraph Input["📄 Input"]
-        A1[23andMe]
-        A2[AncestryDNA]
-        A3[MyHeritage]
-        A4[Nebula]
-        A5[VCF]
-    end
-    
-    subgraph Parse["⚡ Parse"]
-        B[Genome Parser\nrsID + Position extraction]
-    end
-    
-    subgraph Analyze["🔬 Analyze"]
-        C1[Disease Risk\nClinVar pathogenic variants]
-        C2[Drug Response\nPharmGKB interactions]
-        C3[Health Markers\nCurated SNP database]
-    end
-    
-    subgraph Output["📊 Results"]
-        D1[Health Findings]
-        D2[Drug Warnings]
-        D3[Disease Markers]
-        D4[Export Options]
-    end
-    
-    Input --> Parse --> Analyze --> Output
-```
+1. Visit [whatsmydna.vercel.app](https://whatsmydna.vercel.app)
+2. Drag & drop your DNA file (23andMe, AncestryDNA, etc.)
+3. Get instant results!
 
-## Features
+Or run locally:
 
-| Feature | Description |
-|---------|-------------|
-| 🔒 **100% Client-Side** | All analysis runs in your browser |
-| 🧬 **85K Disease Variants** | ClinVar pathogenic/risk variant scanning |
-| 💊 **2,840 Drug Interactions** | PharmGKB pharmacogenomics data |
-| 🏥 **200+ Health Markers** | Curated SNPs across 17 categories |
-| 🌍 **20 Languages** | Auto-detect or manual selection |
-| 📄 **Multi-Format Export** | PDF, Markdown, plain text |
-| 🗑️ **Destroy Data** | One-click memory wipe |
-
-## Databases
-
-```mermaid
-pie title Data Sources (Compressed Download)
-    "ClinVar (497KB)" : 497
-    "PharmGKB (43KB)" : 43
-    "SNP Database (50KB)" : 50
-```
-
-| Database | Entries | Coverage |
-|----------|---------|----------|
-| **ClinVar** | 85,588 | Pathogenic, likely pathogenic, risk factors |
-| **PharmGKB** | 2,840 | Drug-gene interactions with evidence levels |
-| **Curated SNPs** | 91 | Drug metabolism, cardiovascular (LPA, PON1), inflammation (IL6R), liver (PNPLA3), nutrition, fitness, cognition, detox |
-
-## Privacy Architecture
-
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant B as Browser
-    participant S as Server
-    participant I as Internet
-    
-    U->>B: Drop DNA file
-    B->>B: Parse locally
-    B->>B: Load databases (cached)
-    B->>B: Analyze (all client-side)
-    B->>U: Show results
-    
-    Note over B,I: ❌ No data transmission
-    Note over S: Server only serves static files
-```
-
-**What happens:**
-- ✅ File read in browser memory
-- ✅ Databases loaded once, cached locally
-- ✅ Analysis runs entirely client-side
-- ✅ Results stay in browser tab
-- ✅ Destroy button clears all data
-
-**What never happens:**
-- ❌ DNA data uploaded anywhere
-- ❌ Results sent to server
-- ❌ Analytics or tracking
-- ❌ External API calls during analysis
-
-**Security hardening:**
-- CSP blocks all external connections (`connect-src 'self'`)
-- Destroy button explicitly clears all cached data from memory
-- No cookies, localStorage, or IndexedDB used for genetic data
-
-## Supported Formats
-
-| Source | Format | Auto-Detect |
-|--------|--------|-------------|
-| 23andMe | TSV (.txt) | ✅ |
-| AncestryDNA | TSV (.txt) | ✅ |
-| MyHeritage | CSV | ✅ |
-| Nebula Genomics | TSV | ✅ |
-| FamilyTreeDNA | CSV | ✅ |
-| VCF files | VCF | ✅ |
-| **Compressed** | .zip, .gz | ✅ |
-
-> 💡 **Tip:** You can drop compressed 23andMe downloads directly — no need to unzip first!
-
-## Quick Start
-
-**Online**
-```
-https://whatsmydna.xyz
-```
-
-**Local Development**
 ```bash
-git clone https://github.com/oxnr/whatsmydna.git
+git clone https://github.com/oxnr/whatsmydna
 cd whatsmydna
 npm install
 npm run dev
 ```
 
-**For AI Agents**
-```bash
-# See SKILL.md for programmatic JSON API
-curl -X POST http://localhost:5173/api/analyze \
-  -F "file=@genome.txt"
+## 📊 What Gets Analyzed
+
+### Layer 1: ClinVar Database (85,588 variants)
+Automatic scanning for disease-associated variants with human-readable explanations:
+- Cancer risk genes (BRCA1/2, TP53, APC, Lynch syndrome genes)
+- Cardiovascular (LDLR, APOB, cardiomyopathy genes)
+- Neurological (Alzheimer's, Parkinson's risk genes)
+- Blood disorders (Factor V Leiden, hemoglobin variants)
+- Metabolic conditions (cystic fibrosis, PKU, Gaucher's)
+
+### Layer 2: PharmGKB (2,840 drug interactions)
+FDA-level pharmacogenomic guidance:
+- Warfarin dosing (CYP2C9, VKORC1)
+- Statin safety (SLCO1B1)
+- Antidepressant response (CYP2D6, CYP2C19)
+- Chemotherapy dosing (DPYD, TPMT, NUDT15)
+- Pain medication metabolism (CYP2D6)
+
+### Layer 3: Curated SNPs (114 markers)
+Premium explanations with actionable recommendations:
+
+| Category | Examples |
+|----------|----------|
+| **Nutrition** | Lactose intolerance, caffeine metabolism, vitamin D needs, bitter taste |
+| **Fitness** | Power vs endurance (ACTN3), injury risk, recovery |
+| **Brain Health** | APOE (Alzheimer's), COMT (stress response), BDNF |
+| **Methylation** | MTHFR, folate metabolism |
+| **Cardiovascular** | Lp(a), cholesterol genes, clotting factors |
+| **Longevity** | FOXO3, CETP, telomere-related genes |
+| **Detox** | PON1 (pesticides), alcohol metabolism |
+| **Drug Response** | Warfarin, statins, many more |
+
+## 💡 Human-Friendly Recommendations
+
+Each finding comes with actionable advice:
+
+### Example: MTHFR C677T (TT genotype)
+
+> **What it means:** Your body has trouble converting folic acid to its active form.
+>
+> **🥗 Food:** Eat folate-rich foods - leafy greens, legumes, avocado
+> 
+> **💊 Supplement:** Take methylfolate (5-MTHF) instead of folic acid
+>
+> **🚫 Avoid:** Skip fortified foods with synthetic folic acid
+>
+> **📋 Evidence:** Well-established
+
+### Example: APOE ε4 carrier
+
+> **What it means:** Increased Alzheimer's risk, but highly modifiable.
+>
+> **🏃 Lifestyle:** Exercise 30+ min daily (reduces risk by 50%+)
+>
+> **🥗 Food:** Mediterranean diet - olive oil, fish, vegetables
+>
+> **😴 Lifestyle:** Prioritize 7-8 hours sleep
+>
+> **💊 Supplement:** DHA omega-3 (1000mg+) supports brain health
+>
+> **📋 Evidence:** Well-established
+
+## 🔬 Supported File Formats
+
+| Service | Format | Status |
+|---------|--------|--------|
+| 23andMe | TXT | ✅ Full support |
+| AncestryDNA | TXT | ✅ Full support |
+| MyHeritage | CSV | ✅ Full support |
+| FamilyTreeDNA | CSV | ✅ Full support |
+| LivingDNA | TXT | ✅ Full support |
+| Nebula Genomics | TXT | ✅ Full support |
+| Dante Labs | TXT | ✅ Full support |
+| Generic VCF | VCF | ✅ Full support |
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────┐
+│                 Your Browser                     │
+│  ┌───────────────────────────────────────────┐  │
+│  │           DNA File (never uploaded)        │  │
+│  └───────────────────────────────────────────┘  │
+│                      ↓                          │
+│  ┌───────────────────────────────────────────┐  │
+│  │              Parser (parser.ts)            │  │
+│  │         Extracts SNPs from any format      │  │
+│  └───────────────────────────────────────────┘  │
+│                      ↓                          │
+│  ┌───────────────────────────────────────────┐  │
+│  │     Comprehensive Analyzer                 │  │
+│  │  ┌─────────────────────────────────────┐  │  │
+│  │  │ ClinVar (85K)    → Auto-explained   │  │  │
+│  │  │ PharmGKB (2.8K)  → Auto-explained   │  │  │
+│  │  │ Curated (114)    → Premium quality  │  │  │
+│  │  └─────────────────────────────────────┘  │  │
+│  └───────────────────────────────────────────┘  │
+│                      ↓                          │
+│  ┌───────────────────────────────────────────┐  │
+│  │     Recommendations Engine                 │  │
+│  │  Food | Supplements | Lifestyle | Medical  │  │
+│  └───────────────────────────────────────────┘  │
+│                      ↓                          │
+│  ┌───────────────────────────────────────────┐  │
+│  │         Results (100% client-side)         │  │
+│  └───────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────┘
 ```
 
-## Analysis Categories
+## 🛡️ Privacy Guarantee
 
-| Category | Key Genes | Clinical Relevance |
-|----------|-----------|-------------------|
-| **Drug Metabolism** | CYP2C19, CYP2D6, CYP2C9, CYP2A6, VKORC1 | Dosing adjustments |
-| **Methylation** | MTHFR, MTR, MTRR, BHMT | Folate metabolism |
-| **Cardiovascular** | APOE, F5 (Leiden), F2, LPA | Heart disease, Lp(a) risk |
-| **Pharmacogenomics** | SLCO1B1, DPYD, TPMT | Drug toxicity risk |
-| **Detox** | PON1, CYP1A2 | Organophosphate/pesticide metabolism |
-| **Inflammation** | IL6R, TNF | Inflammatory markers |
-| **Liver** | PNPLA3 | NAFLD/fatty liver risk |
-| **Neurotransmitters** | COMT, BDNF, DRD2, MAOA | Mental health |
-| **Nutrition** | MCM6 (lactose), FTO, TCF7L2, TAS2R38 | Diet, bitter taste |
-| **Fitness** | ACTN3, PPARGC1A, ADRB2 | Athletic potential |
-| **Sleep** | CLOCK, PER2, ADA | Circadian rhythm |
-| **Longevity** | FOXO3, CETP, APOC3 | Aging markers |
+- **No server uploads** — All analysis runs in WebAssembly/JavaScript in your browser
+- **No tracking** — No analytics, no cookies, no fingerprinting  
+- **No storage** — Click "Destroy Data" and everything is wiped from memory
+- **Open source** — Audit the code yourself
 
-## Tech Stack
-
-| Component | Technology |
-|-----------|------------|
-| Framework | SvelteKit |
-| Language | TypeScript |
-| Styling | Tailwind CSS |
-| PDF Export | jsPDF |
-| Testing | Vitest |
-| Deployment | Static (Cloudflare Pages) |
-
-## Bundle Size
-
-```
-App Code:     ~300KB (gzipped)
-ClinVar:      497KB (Brotli)
-PharmGKB:     43KB (Brotli)
-────────────────────────────
-First Load:   ~850KB
-```
-
-## Testing
-
-```bash
-npm run test      # Run tests
-npm run check     # Type check
-npm run build     # Production build
-```
-
-## Data Sources
+## 📖 Data Sources
 
 - [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) — NCBI clinical variant database
 - [PharmGKB](https://www.pharmgkb.org/) — Pharmacogenomics knowledge base
 - [CPIC](https://cpicpgx.org/) — Clinical pharmacogenetics guidelines
-- [SNPedia](https://www.snpedia.com/) — SNP wiki
+- [SNPedia](https://www.snpedia.com/) — Community SNP wiki
 
-## How It Works
+## 🤝 Contributing
 
-whatsmydna uses a **three-layer analysis system** that works for ANY DNA file:
+Contributions welcome! Here's how:
 
-### Layer 1: ClinVar Database (85,588 variants)
-- Scans for pathogenic, likely pathogenic, and risk variants
-- **Auto-explains** findings in plain English using a gene function database
-- Covers cancer genes, cardiovascular, neurological, metabolic disorders
-- No manual curation needed - works automatically
+### Add curated SNP explanations
+Edit `src/lib/analysis/comprehensiveSnpDatabase.ts`:
+```typescript
+"rs123456": {
+  gene: "GENE_NAME",
+  category: "Category",
+  variants: {
+    "AA": { status: "normal", desc: "Human-readable explanation", magnitude: 0 },
+    "AG": { status: "carrier", desc: "What this means for you", magnitude: 2 },
+    "GG": { status: "affected", desc: "Actionable advice here", magnitude: 3 },
+  }
+}
+```
 
-### Layer 2: PharmGKB (2,840 drug-gene interactions)
-- Identifies medications that may need dosing adjustments
-- **Auto-explains** drug interactions with evidence levels
-- Covers warfarin, statins, antidepressants, chemotherapy, and more
-- Follows CPIC clinical guidelines
+### Add recommendations
+Edit `src/lib/analysis/recommendations.ts`:
+```typescript
+"rs123456": {
+  "GG": [
+    { category: 'food', title: 'Eat more X', description: 'Because...', priority: 'high', evidence: 'Well-established' },
+    { category: 'supplement', title: 'Consider Y', description: 'May help...', priority: 'medium', evidence: 'Emerging' },
+  ]
+}
+```
 
-### Layer 3: Curated SNPs (114 markers)
-- Hand-written explanations for common health/lifestyle markers
-- Premium quality explanations with actionable advice
-- Covers: caffeine, lactose, COMT, ACTN3, FTO, APOE, MTHFR, etc.
-- Community-contributed via pull requests
+### Improve auto-explanations
+Edit `src/lib/analysis/autoExplainer.ts` to add gene functions or drug class explanations.
 
-**Result:** Any DNA file gets useful results. Rare variants get auto-generated explanations. Common variants get premium curated explanations.
+## ⚠️ Disclaimer
 
-## Development
+**This tool is for educational purposes only.** It is not a medical diagnostic device and should not be used to make health decisions. Always consult healthcare professionals for medical advice. Genetic testing results require proper interpretation by qualified geneticists or genetic counselors.
 
-To contribute curated markers, add entries to `src/lib/analysis/comprehensiveSnpDatabase.ts`.
-To improve auto-explanations, edit `src/lib/analysis/autoExplainer.ts`.
+## 📄 License
 
-## Disclaimer
+MIT License — use freely, but please contribute improvements back!
 
-⚠️ **For educational purposes only.**
+## 🙏 Acknowledgments
 
-- Not medical advice
-- Not a clinical diagnosis
-- Not a substitute for genetic counseling
-- Consult healthcare professionals for medical decisions
-
-## License
-
-MIT
+- Built with [SvelteKit](https://kit.svelte.dev/)
+- UI components from [shadcn-svelte](https://www.shadcn-svelte.com/)
+- Hosted on [Vercel](https://vercel.com)
+- Curated with help from AI (Claude Code + Codex)
 
 ---
 
-Built with [OpenClaw](https://github.com/openclaw/openclaw) + [Claude](https://anthropic.com/claude)
+**Made with 🧬 by [oxnr](https://github.com/oxnr)**

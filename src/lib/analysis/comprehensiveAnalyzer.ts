@@ -11,6 +11,7 @@
 import { parseGenome, type ParsedGenome } from './parser';
 import { COMPREHENSIVE_SNPS } from './comprehensiveSnpDatabase';
 import { explainClinVarVariant, explainDrugInteraction, inferCategory, getSeverityScore } from './autoExplainer';
+import { getRecommendations, type Recommendation } from './recommendations';
 import type { AnalysisResults, SNPResult, DrugInteraction, DiseaseRisk } from '$lib/stores/app';
 
 // Lazy-loaded databases
@@ -113,6 +114,9 @@ function analyzeComprehensiveSNPs(genome: ParsedGenome): SNPResult[] {
       }
       
       if (variantInfo) {
+        // Get actionable recommendations for this SNP
+        const recs = getRecommendations(rsid, snpData.genotype);
+        
         findings.push({
           rsid: rsid.toUpperCase(),
           gene: entry.gene,
@@ -121,7 +125,8 @@ function analyzeComprehensiveSNPs(genome: ParsedGenome): SNPResult[] {
           status: variantInfo.status,
           description: variantInfo.desc,
           magnitude: variantInfo.magnitude,
-          impact: getMagnitudeImpact(variantInfo.magnitude)
+          impact: getMagnitudeImpact(variantInfo.magnitude),
+          recommendations: recs.length > 0 ? recs : undefined
         });
       }
     }
