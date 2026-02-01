@@ -2399,3 +2399,271 @@ export const COMPREHENSIVE_SNPS: Record<string, SNPEntry> =
   }
 }
 ;
+
+// =========================================================================
+// ADDITIONAL PHARMACOGENOMICS (CPIC-relevant)
+// =========================================================================
+
+export const ADDITIONAL_SNPS: Record<string, SNPEntry> = {
+  "rs3918290": {
+    "gene": "DPYD",
+    "category": "Drug Metabolism",
+    "variants": {
+      "CC": { "status": "normal", "desc": "Normal DPD enzyme - standard 5-FU/capecitabine metabolism", "magnitude": 0 },
+      "CT": { "status": "intermediate", "desc": "DPD deficiency carrier (*2A) - 50% dose reduction for fluoropyrimidines", "magnitude": 4 },
+      "TC": { "status": "intermediate", "desc": "DPD deficiency carrier (*2A) - 50% dose reduction for fluoropyrimidines", "magnitude": 4 },
+      "TT": { "status": "deficient", "desc": "DPD deficient - DO NOT USE 5-FU/capecitabine (life-threatening toxicity)", "magnitude": 5 }
+    }
+  },
+  "rs1142345": {
+    "gene": "TPMT",
+    "category": "Drug Metabolism",
+    "variants": {
+      "AA": { "status": "normal", "desc": "Normal TPMT - standard thiopurine (azathioprine/6-MP) dosing", "magnitude": 0 },
+      "AG": { "status": "intermediate", "desc": "TPMT intermediate (*3A/*3C) - reduce thiopurine dose 30-50%", "magnitude": 3 },
+      "GA": { "status": "intermediate", "desc": "TPMT intermediate (*3A/*3C) - reduce thiopurine dose 30-50%", "magnitude": 3 },
+      "GG": { "status": "poor", "desc": "TPMT poor metabolizer - 10x dose reduction or avoid thiopurines", "magnitude": 5 }
+    }
+  },
+  "rs887829": {
+    "gene": "UGT1A1",
+    "category": "Drug Metabolism",
+    "variants": {
+      "CC": { "status": "normal", "desc": "Normal UGT1A1 - standard irinotecan metabolism", "magnitude": 0 },
+      "CT": { "status": "intermediate", "desc": "UGT1A1*28 carrier - monitor for irinotecan toxicity", "magnitude": 2 },
+      "TC": { "status": "intermediate", "desc": "UGT1A1*28 carrier - monitor for irinotecan toxicity", "magnitude": 2 },
+      "TT": { "status": "reduced", "desc": "UGT1A1*28/*28 (Gilbert syndrome) - reduce irinotecan dose, bilirubin may be elevated", "magnitude": 3 }
+    }
+  },
+  "rs116855232": {
+    "gene": "NUDT15",
+    "category": "Drug Metabolism",
+    "variants": {
+      "CC": { "status": "normal", "desc": "Normal NUDT15 - standard thiopurine tolerance", "magnitude": 0 },
+      "CT": { "status": "intermediate", "desc": "NUDT15 intermediate - reduce thiopurine dose (especially in Asians)", "magnitude": 3 },
+      "TC": { "status": "intermediate", "desc": "NUDT15 intermediate - reduce thiopurine dose (especially in Asians)", "magnitude": 3 },
+      "TT": { "status": "poor", "desc": "NUDT15 poor metabolizer - severe thiopurine toxicity risk, avoid or use 10% dose", "magnitude": 5 }
+    }
+  },
+  "rs3745274": {
+    "gene": "CYP2B6",
+    "category": "Drug Metabolism",
+    "variants": {
+      "GG": { "status": "normal", "desc": "Normal CYP2B6 - standard efavirenz/methadone metabolism", "magnitude": 0 },
+      "GT": { "status": "intermediate", "desc": "CYP2B6*6 carrier - may need efavirenz dose adjustment", "magnitude": 2 },
+      "TG": { "status": "intermediate", "desc": "CYP2B6*6 carrier - may need efavirenz dose adjustment", "magnitude": 2 },
+      "TT": { "status": "slow", "desc": "CYP2B6 slow metabolizer - reduce efavirenz dose, monitor methadone", "magnitude": 3 }
+    }
+  },
+  "rs28399504": {
+    "gene": "CYP3A4",
+    "category": "Drug Metabolism",
+    "variants": {
+      "AA": { "status": "normal", "desc": "Normal CYP3A4 - metabolizes ~50% of all drugs", "magnitude": 0 },
+      "AG": { "status": "reduced", "desc": "CYP3A4*22 carrier - reduced metabolism of many drugs", "magnitude": 2 },
+      "GA": { "status": "reduced", "desc": "CYP3A4*22 carrier - reduced metabolism of many drugs", "magnitude": 2 },
+      "GG": { "status": "poor", "desc": "CYP3A4*22 homozygous - significantly reduced drug metabolism", "magnitude": 3 }
+    }
+  },
+  
+  // VITAMIN METABOLISM
+  "rs2282679": {
+    "gene": "GC",
+    "category": "Nutrition",
+    "variants": {
+      "AA": { "status": "optimal", "desc": "Normal vitamin D binding protein - efficient vitamin D transport", "magnitude": 0 },
+      "AC": { "status": "reduced", "desc": "Reduced vitamin D levels - may need higher supplementation", "magnitude": 1 },
+      "CA": { "status": "reduced", "desc": "Reduced vitamin D levels - may need higher supplementation", "magnitude": 1 },
+      "CC": { "status": "low", "desc": "Lower vitamin D levels - consider 2000-4000 IU/day supplementation", "magnitude": 2 }
+    }
+  },
+  "rs12934922": {
+    "gene": "BCMO1",
+    "category": "Nutrition",
+    "variants": {
+      "AA": { "status": "normal", "desc": "Normal beta-carotene conversion to vitamin A", "magnitude": 0 },
+      "AT": { "status": "reduced", "desc": "Reduced beta-carotene conversion - may need preformed vitamin A", "magnitude": 1 },
+      "TA": { "status": "reduced", "desc": "Reduced beta-carotene conversion - may need preformed vitamin A", "magnitude": 1 },
+      "TT": { "status": "poor", "desc": "Poor beta-carotene converter - get vitamin A from animal sources or supplements", "magnitude": 2 }
+    }
+  },
+  "rs602662": {
+    "gene": "FUT2",
+    "category": "Nutrition",
+    "variants": {
+      "GG": { "status": "secretor", "desc": "Secretor status - normal B12 absorption, higher norovirus risk", "magnitude": 0 },
+      "GA": { "status": "secretor", "desc": "Secretor status - normal B12 absorption", "magnitude": 0 },
+      "AG": { "status": "secretor", "desc": "Secretor status - normal B12 absorption", "magnitude": 0 },
+      "AA": { "status": "non-secretor", "desc": "Non-secretor - may have lower B12, but resistant to norovirus", "magnitude": 1 }
+    }
+  },
+  
+  // EYE COLOR
+  "rs1800407": {
+    "gene": "OCA2",
+    "category": "Traits",
+    "variants": {
+      "CC": { "status": "brown", "desc": "Brown eye color allele", "magnitude": 0 },
+      "CT": { "status": "variable", "desc": "Eye color modifier - may lighten brown eyes", "magnitude": 0 },
+      "TC": { "status": "variable", "desc": "Eye color modifier - may lighten brown eyes", "magnitude": 0 },
+      "TT": { "status": "blue_green", "desc": "Blue/green eye color allele", "magnitude": 0 }
+    }
+  },
+  
+  // HAIR
+  "rs1805009": {
+    "gene": "MC1R",
+    "category": "Traits",
+    "variants": {
+      "GG": { "status": "normal", "desc": "Normal MC1R - typical hair color", "magnitude": 0 },
+      "GC": { "status": "carrier", "desc": "Red hair carrier - may have lighter skin, freckles", "magnitude": 0 },
+      "CG": { "status": "carrier", "desc": "Red hair carrier - may have lighter skin, freckles", "magnitude": 0 },
+      "CC": { "status": "red_hair", "desc": "Red hair variant - fair skin, sun sensitivity", "magnitude": 1 }
+    }
+  },
+  
+  // PAIN SENSITIVITY  
+  "rs6269": {
+    "gene": "COMT",
+    "category": "Neurotransmitters",
+    "variants": {
+      "AA": { "status": "high_sensitivity", "desc": "Higher pain sensitivity - may need more pain medication", "magnitude": 2 },
+      "AG": { "status": "moderate", "desc": "Moderate pain sensitivity", "magnitude": 1 },
+      "GA": { "status": "moderate", "desc": "Moderate pain sensitivity", "magnitude": 1 },
+      "GG": { "status": "low_sensitivity", "desc": "Lower pain sensitivity - standard pain medication dosing", "magnitude": 0 }
+    }
+  },
+  
+  // MUSCLE INJURY
+  "rs1800012": {
+    "gene": "COL1A1",
+    "category": "Fitness",
+    "variants": {
+      "GG": { "status": "normal", "desc": "Normal collagen - standard injury risk", "magnitude": 0 },
+      "GT": { "status": "reduced_risk", "desc": "Reduced ACL tear risk, better tendon health", "magnitude": 0 },
+      "TG": { "status": "reduced_risk", "desc": "Reduced ACL tear risk, better tendon health", "magnitude": 0 },
+      "TT": { "status": "protective", "desc": "Lower soft tissue injury risk", "magnitude": 0 }
+    }
+  },
+  
+  // WEIGHT REGAIN
+  "rs1558902": {
+    "gene": "FTO",
+    "category": "Nutrition",
+    "variants": {
+      "TT": { "status": "normal", "desc": "Normal FTO - standard weight regulation", "magnitude": 0 },
+      "TA": { "status": "risk", "desc": "FTO risk allele - higher BMI tendency, responds well to exercise", "magnitude": 2 },
+      "AT": { "status": "risk", "desc": "FTO risk allele - higher BMI tendency, responds well to exercise", "magnitude": 2 },
+      "AA": { "status": "high_risk", "desc": "FTO high risk - 3kg higher average weight, but exercise is very effective", "magnitude": 2 }
+    }
+  },
+  
+  // CELIAC
+  "rs2187668": {
+    "gene": "HLA-DQ2.5",
+    "category": "Autoimmune",
+    "variants": {
+      "CC": { "status": "low_risk", "desc": "Low celiac disease risk", "magnitude": 0 },
+      "CT": { "status": "risk", "desc": "HLA-DQ2.5 carrier - celiac disease risk if gluten-sensitive", "magnitude": 2 },
+      "TC": { "status": "risk", "desc": "HLA-DQ2.5 carrier - celiac disease risk if gluten-sensitive", "magnitude": 2 },
+      "TT": { "status": "high_risk", "desc": "HLA-DQ2.5 homozygous - highest celiac disease risk", "magnitude": 3 }
+    }
+  },
+  
+  // AGE-RELATED MACULAR DEGENERATION
+  "rs1061170": {
+    "gene": "CFH",
+    "category": "Eye Health",
+    "variants": {
+      "TT": { "status": "normal", "desc": "Normal CFH - standard AMD risk", "magnitude": 0 },
+      "TC": { "status": "increased", "desc": "CFH Y402H carrier - 2-3x AMD risk, take AREDS vitamins if over 50", "magnitude": 2 },
+      "CT": { "status": "increased", "desc": "CFH Y402H carrier - 2-3x AMD risk, take AREDS vitamins if over 50", "magnitude": 2 },
+      "CC": { "status": "high", "desc": "CFH Y402H homozygous - 5-7x AMD risk, regular eye exams essential", "magnitude": 3 }
+    }
+  },
+  
+  // GLAUCOMA
+  "rs10483727": {
+    "gene": "SIX6",
+    "category": "Eye Health",
+    "variants": {
+      "CC": { "status": "normal", "desc": "Normal glaucoma risk", "magnitude": 0 },
+      "CT": { "status": "increased", "desc": "Increased primary open-angle glaucoma risk", "magnitude": 2 },
+      "TC": { "status": "increased", "desc": "Increased primary open-angle glaucoma risk", "magnitude": 2 },
+      "TT": { "status": "high", "desc": "Higher glaucoma risk - regular eye pressure checks recommended", "magnitude": 2 }
+    }
+  },
+  
+  // DEEP VEIN THROMBOSIS (beyond Factor V)
+  "rs8176719": {
+    "gene": "ABO",
+    "category": "Cardiovascular",
+    "variants": {
+      "del": { "status": "type_o", "desc": "Blood type O - 30% lower clot risk", "magnitude": 0 },
+      "GG": { "status": "non_o", "desc": "Non-O blood type - slightly higher clot risk", "magnitude": 1 }
+    }
+  },
+  
+  // GOUT
+  "rs2231142": {
+    "gene": "ABCG2",
+    "category": "Metabolism",
+    "variants": {
+      "GG": { "status": "normal", "desc": "Normal uric acid excretion", "magnitude": 0 },
+      "GT": { "status": "risk", "desc": "Reduced uric acid excretion - higher gout risk, limit purines", "magnitude": 2 },
+      "TG": { "status": "risk", "desc": "Reduced uric acid excretion - higher gout risk, limit purines", "magnitude": 2 },
+      "TT": { "status": "high_risk", "desc": "High gout risk - avoid high-purine foods, stay hydrated", "magnitude": 3 }
+    }
+  },
+  
+  // KIDNEY STONES
+  "rs6088580": {
+    "gene": "CLDN14",
+    "category": "Metabolism",
+    "variants": {
+      "GG": { "status": "normal", "desc": "Normal kidney stone risk", "magnitude": 0 },
+      "GA": { "status": "risk", "desc": "Increased kidney stone risk - stay well hydrated", "magnitude": 2 },
+      "AG": { "status": "risk", "desc": "Increased kidney stone risk - stay well hydrated", "magnitude": 2 },
+      "AA": { "status": "high_risk", "desc": "Higher kidney stone risk - 2+ liters water daily, limit oxalates", "magnitude": 2 }
+    }
+  },
+  
+  // HEARING LOSS
+  "rs7598759": {
+    "gene": "GRM7",
+    "category": "Sensory",
+    "variants": {
+      "AA": { "status": "normal", "desc": "Normal age-related hearing risk", "magnitude": 0 },
+      "AG": { "status": "risk", "desc": "Increased noise-induced hearing loss risk - use ear protection", "magnitude": 1 },
+      "GA": { "status": "risk", "desc": "Increased noise-induced hearing loss risk - use ear protection", "magnitude": 1 },
+      "GG": { "status": "high_risk", "desc": "Higher hearing loss susceptibility - avoid loud noise exposure", "magnitude": 2 }
+    }
+  },
+  
+  // RESTLESS LEG SYNDROME
+  "rs3923809": {
+    "gene": "BTBD9",
+    "category": "Sleep/Circadian",
+    "variants": {
+      "GG": { "status": "low", "desc": "Lower restless leg syndrome risk", "magnitude": 0 },
+      "GA": { "status": "moderate", "desc": "Moderate RLS risk - iron levels may help if low", "magnitude": 1 },
+      "AG": { "status": "moderate", "desc": "Moderate RLS risk - iron levels may help if low", "magnitude": 1 },
+      "AA": { "status": "high", "desc": "Higher RLS risk - check iron/ferritin, avoid caffeine before bed", "magnitude": 2 }
+    }
+  },
+  
+  // MIGRAINE
+  "rs2651899": {
+    "gene": "PRDM16",
+    "category": "Neurotransmitters",
+    "variants": {
+      "CC": { "status": "normal", "desc": "Normal migraine risk", "magnitude": 0 },
+      "CT": { "status": "risk", "desc": "Increased migraine susceptibility", "magnitude": 1 },
+      "TC": { "status": "risk", "desc": "Increased migraine susceptibility", "magnitude": 1 },
+      "TT": { "status": "high", "desc": "Higher migraine risk - identify triggers, consider prevention", "magnitude": 2 }
+    }
+  }
+};
+
+// Merge additional SNPs into main database
+Object.assign(COMPREHENSIVE_SNPS, ADDITIONAL_SNPS);
