@@ -121,6 +121,11 @@ sequenceDiagram
 - ❌ Analytics or tracking
 - ❌ External API calls during analysis
 
+**Security hardening:**
+- CSP blocks all external connections (`connect-src 'self'`)
+- Destroy button explicitly clears all cached data from memory
+- No cookies, localStorage, or IndexedDB used for genetic data
+
 ## Supported Formats
 
 | Source | Format | Auto-Detect |
